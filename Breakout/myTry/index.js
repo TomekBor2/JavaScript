@@ -103,26 +103,18 @@ addBlocks()
 
 function changeDirection() {
   if (moveByX == 5 && moveByY == 5) {
-    moveByX = -5
+    moveByY = -5
     return
   }
-  if (moveByX == 5 && moveByY == -5 && ballPosition[1] > 50) {
+  if (moveByX == 5 && moveByY == -5) {
     moveByX = -5
     return
   }
   if (moveByX == -5 && moveByY == 5) {
-    moveByY = -5
-    return
-  }
-  if (moveByX == -5 && moveByY == -5 && ballPosition[1] > 50) {
     moveByX = 5
     return
   }
-  if (moveByX == -5 && moveByY == -5 && ballPosition[1] <= 50) {
-    moveByY = 5
-    return
-  }
-  if (moveByX == 5 && moveByY == -5 && ballPosition[1] <= 50) {
+  if (moveByX == -5 && moveByY == -5) {
     moveByY = 5
     return
   }
@@ -150,7 +142,8 @@ function checkForCollisions() {
   if (
     ballPosition[0] > userPosition[0] &&
     ballPosition[0] < userPosition[0] + userWidth &&
-    ballPosition[1] == userPosition[1] + userHeight
+    ballPosition[1] > userPosition[1] &&
+    ballPosition[1] < userPosition[1] + userHeight
   ) {
     changeDirection()
   }
@@ -162,8 +155,8 @@ function checkForCollisions() {
       ballPosition[0] < blocks[i].bottomRight[0] &&
       ballPosition[1] + ballDiameter > blocks[i].bottomLeft[1]
     ) {
-      const allBlocks = Array.from(document.querySelectorAll('.block'))
-      allBlocks[i].classList.remove('block')
+      const allBlocks = Array.from(document.querySelectorAll(".block"))
+      allBlocks[i].classList.remove("block")
       blocks.splice(i, 1)
       changeDirection()
     }
